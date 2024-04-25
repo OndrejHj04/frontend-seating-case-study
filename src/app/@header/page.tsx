@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client";
+import LoginForm from "@/components/LoginForm";
 import UserMenu from "@/components/UserMenu";
 
 export default function Header() {
@@ -16,13 +17,7 @@ export default function Header() {
         <div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
         {/* user menu */}
         <div className="max-w-[250px] w-full flex justify-end">
-          {isLoggedIn ? (
-            <UserMenu />
-          ) : (
-            <Button disabled variant="secondary">
-              Login or register
-            </Button>
-          )}
+          {isLoggedIn ? <UserMenu /> : <LoginForm />}
         </div>
       </div>
     </nav>
