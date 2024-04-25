@@ -9,14 +9,14 @@ export interface event {
   place: string;
 }
 
+export interface ticketDetail {
+  id: string;
+  name: string;
+  price: number;
+}
+
 export interface eventTickets {
-  ticketTypes: [
-    {
-      id: string;
-      name: string;
-      price: number;
-    }
-  ];
+  ticketTypes: [ticketDetail];
   seatRows: [
     {
       seatRow: number;

@@ -23,14 +23,19 @@ export default async function SeatingMap({ id }: { id: string }) {
     >
       {seatingData.seatRows.map((row) => (
         <React.Fragment key={row.seatRow}>
-          {row.seats.map((seat) => (
-            <div
-              key={seat.place}
-              style={{ gridRow: row.seatRow, gridColumn: seat.place }}
-            >
-              <Seat />
-            </div>
-          ))}
+          {row.seats.map((seat) => {
+            const seatData = seatingData.ticketTypes.find(
+              (item) => item.id === seat.ticketTypeId
+            )!;
+            return (
+              <div
+                key={seat.place}
+                style={{ gridRow: row.seatRow, gridColumn: seat.place }}
+              >
+                <Seat data={seatData} />
+              </div>
+            );
+          })}
         </React.Fragment>
       ))}
     </div>

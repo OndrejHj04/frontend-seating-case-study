@@ -5,10 +5,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
+import { ticketDetail } from "@/lib/types";
 import { cn } from "@/lib/utils.ts";
 import React from "react";
 
-interface SeatProps extends React.HTMLAttributes<HTMLElement> {}
+interface SeatProps extends React.HTMLAttributes<HTMLElement> {
+  data: ticketDetail;
+}
 
 export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
   (props, ref) => {
@@ -27,7 +30,18 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
           </div>
         </PopoverTrigger>
         <PopoverContent>
-          <pre>{JSON.stringify({ seatData: null }, null, 2)}</pre>
+          <p>
+            Type:{" "}
+            <span className="text-zinc-900 font-semibold">
+              {props.data.name}
+            </span>
+          </p>
+          <p>
+            Price:{" "}
+            <span className="text-zinc-900 font-semibold">
+              {props.data.price} Kč
+            </span>
+          </p>
 
           <footer className="flex flex-col">
             {isInCart ? (
