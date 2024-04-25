@@ -8,13 +8,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  cart,
+  header,
 }: {
   children: React.ReactNode;
+  cart: React.ReactNode;
+  header: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body>
-        <div id="root">{children}</div>
+        <div id="root">
+          {header}
+          {children}
+          {cart}
+        </div>
       </body>
     </html>
   );

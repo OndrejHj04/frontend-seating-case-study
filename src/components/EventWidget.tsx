@@ -1,24 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { event } from "@/lib/types";
 import dayjs from "dayjs";
-interface event {
-  eventId: string;
-  namePub: string;
-  description: string;
-  currencyIso: string;
-  dateFrom: string;
-  dateTo: string;
-  headerImageUrl: string;
-  place: string;
-}
 
-const getEvent = async () => {
-  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`);
-  const data: event = await req.json();
-  return data;
-};
-
-export default async function EventWidget() {
-  const event = await getEvent();
+export default async function EventWidget({ event }: { event: event }) {
   return (
     <aside className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
       <img src={event.headerImageUrl} alt="NFCtron Keynote banner" />
