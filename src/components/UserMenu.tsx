@@ -14,8 +14,12 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
+import { store } from "@/lib/store";
+import { userType } from "@/lib/types";
 
-export default function UserMenu() {
+export default function UserMenu({ user }: { user: userType }) {
+  const { logoutUser } = store();
+  const name = user.firstName + " " + user.lastName;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,19 +33,22 @@ export default function UserMenu() {
             </Avatar>
 
             <div className="flex flex-col text-left">
-              <span className="text-sm font-medium">John Doe</span>
-              <span className="text-xs text-zinc-500">
-                john.doe@nfctron.com
-              </span>
+              <span className="text-sm font-medium">{name}</span>
+              <span className="text-xs text-zinc-500">{user.email}</span>
             </div>
           </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px]">
-        <DropdownMenuLabel>John Doe</DropdownMenuLabel>
+        <DropdownMenuLabel>{name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem disabled>Logout</DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => logoutUser()}
+          >
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

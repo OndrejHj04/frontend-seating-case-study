@@ -31,3 +31,14 @@ export interface eventTickets {
     }
   ];
 }
+
+export interface userType {
+  firstName: "string";
+  lastName: "string";
+  email: "string";
+}
+
+export interface userLoginResponse {
+  message: "string";
+  user?: userType;
+}

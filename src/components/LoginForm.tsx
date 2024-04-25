@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,6 +7,9 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { userLoginResponse } from "@/lib/types";
+import { store } from "@/lib/store";
 
 interface formValues {
   email: string;
@@ -13,12 +17,13 @@ interface formValues {
 }
 
 export default function LoginForm() {
+  const [error, setError] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { isValid },
   } = useForm<formValues>();
-
+  const { setUserSession } = store();
   const onSubmit = (data: formValues) => {
     fetch(`https://nfctron-frontend-seating-case-study-2024.vercel.app/login`, {
       method: "POST",
@@ -29,7 +34,13 @@ export default function LoginForm() {
       },
     })
       .then((res) => res.json())
-      .then((res) => console.log(res));
+      .then((res: userLoginResponse) => {
+        if (res.user) {
+          setUserSession(res.user);
+        } else {
+          setError(true);
+        }
+      });
   };
 
   return (
@@ -49,6 +60,11 @@ export default function LoginForm() {
             {...register("password", { required: true })}
             type="password"
           />
+          {error && (
+            <p className="text-sm text-center text-red-500">
+              Nepodařilo se přihlásit
+            </p>
+          )}
           <Button type="submit" disabled={!isValid}>
             Log in
           </Button>

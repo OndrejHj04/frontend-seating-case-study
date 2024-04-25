@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.372.0",
     "next": "^14.2.3",
     "postcss": "^8.4.38",
@@ -29,6 +30,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
