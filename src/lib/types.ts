@@ -13,10 +13,11 @@ export interface ticketDetail {
   id: string;
   name: string;
   price: number;
+  seatId: string;
 }
 
 export interface eventTickets {
-  ticketTypes: [ticketDetail];
+  ticketTypes: [{ id: string; name: string; price: number }];
   seatRows: [
     {
       seatRow: number;

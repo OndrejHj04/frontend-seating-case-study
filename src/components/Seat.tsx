@@ -5,8 +5,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
+import { store } from "@/lib/store";
 import { ticketDetail } from "@/lib/types";
 import { cn } from "@/lib/utils.ts";
+import { TicketCheck } from "lucide-react";
 import React from "react";
 
 interface SeatProps extends React.HTMLAttributes<HTMLElement> {
@@ -15,18 +17,24 @@ interface SeatProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
   (props, ref) => {
-    const isInCart = false;
+    const { tickets, addTicket, removeTicket } = store();
+    const isInCart = tickets.find(
+      (ticket) => ticket.seatId === props.data.seatId
+    );
+
     return (
       <Popover>
         <PopoverTrigger>
           <div
             className={cn(
-              "size-8 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-color",
+              `size-8 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-color flex flex-1`,
               props.className
             )}
             ref={ref}
           >
-            <span className="text-xs text-zinc-400 font-medium">[n]</span>
+            <span className="text-xs text-zinc-400 font-medium m-auto">
+              {isInCart ? <TicketCheck color="#1e7f00" /> : `[n]`}
+            </span>
           </div>
         </PopoverTrigger>
         <PopoverContent>
@@ -45,11 +53,19 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
 
           <footer className="flex flex-col">
             {isInCart ? (
-              <Button disabled variant="destructive" size="sm">
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => removeTicket(props.data)}
+              >
                 Remove from cart
               </Button>
             ) : (
-              <Button disabled variant="default" size="sm">
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => addTicket(props.data)}
+              >
                 Add to cart
               </Button>
             )}
