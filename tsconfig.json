@@ -5,7 +5,11 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "esModuleInterop": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,18 +21,21 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "include": [
+    "./src",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["./node_modules"]
 }
