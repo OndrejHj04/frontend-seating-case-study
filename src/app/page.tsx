@@ -18,16 +18,8 @@ export default async function Page() {
         {/* inner content */}
         <div className="max-w-screen-lg m-auto p-4 flex items-start grow gap-3 w-full">
           {/* seating card */}
-          <div
-            className="bg-white rounded-md grow grid p-3 self-stretch shadow-sm"
-            style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(40px, 1fr))",
-              gridAutoRows: "40px",
-            }}
-          >
-            {/*	seating map */}
-            <SeatingMap />
-          </div>
+
+          <SeatingMap id={event.eventId} />
 
           {/* event info */}
           <EventWidget event={event} />

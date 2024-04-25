@@ -8,3 +8,25 @@ export interface event {
   headerImageUrl: string;
   place: string;
 }
+
+export interface eventTickets {
+  ticketTypes: [
+    {
+      id: string;
+      name: string;
+      price: number;
+    }
+  ];
+  seatRows: [
+    {
+      seatRow: number;
+      seats: [
+        {
+          seatId: string;
+          place: number;
+          ticketTypeId: string;
+        }
+      ];
+    }
+  ];
+}
