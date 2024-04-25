@@ -1,20 +1,40 @@
 import { Button } from "@/components/ui/button";
+import dayjs from "dayjs";
+interface event {
+  eventId: string;
+  namePub: string;
+  description: string;
+  currencyIso: string;
+  dateFrom: string;
+  dateTo: string;
+  headerImageUrl: string;
+  place: string;
+}
 
-export default function EventWidget() {
+const getEvent = async () => {
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`);
+  const data: event = await req.json();
+  return data;
+};
+
+export default async function EventWidget() {
+  const event = await getEvent();
   return (
     <aside className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
-      {/* event header image placeholder */}
-      <div className="bg-zinc-100 rounded-md h-32" />
-      {/* event name */}
-      <h1 className="text-xl text-zinc-900 font-semibold">[event-name]</h1>
-      {/* event description */}
-      <p className="text-sm text-zinc-500">
-        [event-description]: Lorem ipsum dolor sit amet, consectetur adipisicing
-        elit. Aliquam aliquid asperiores beatae deserunt dicta dolorem eius eos
-        fuga laborum nisi officia pariatur quidem repellendus, reprehenderit
-        sapiente, sed tenetur vel voluptatibus?
-      </p>
-      {/* add to calendar button */}
+      <img src={event.headerImageUrl} alt="NFCtron Keynote banner" />
+      <div>
+        <h1 className="text-xl text-zinc-900 font-semibold">{event.namePub}</h1>
+        <p className="text-xs text-zinc-500">
+          Kdy:{" "}
+          {`${dayjs(event.dateFrom).format("DD. MM. HH:mm")} - ${dayjs(
+            event.dateTo
+          ).format("HH:mm")}`}
+        </p>
+        <p className="text-xs text-zinc-500">Kde: {event.place}</p>
+      </div>
+
+      <p className="text-sm text-zinc-500">{event.description}</p>
+
       <Button variant="secondary" disabled>
         Add to calendar
       </Button>
