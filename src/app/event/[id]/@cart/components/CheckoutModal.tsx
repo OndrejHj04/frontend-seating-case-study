@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import UserDisplay from "@/components/UserDisplay";
 import { store } from "@/lib/store";
 import { orderType, userType } from "@/lib/types";
-import { calculateTickets } from "@/lib/utils";
+import { calculateTickets, formatPrice } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Modal from "react-modal";
 import swal from "sweetalert";
@@ -29,7 +29,7 @@ export default function CheckoutModal({
   eventId: string;
 }) {
   const { replace } = useRouter();
-  const { tickets } = store();
+  const { tickets, currency } = store();
   const { count, price } = calculateTickets(tickets);
   const searchParams = useSearchParams();
   const displayModal = searchParams.get("modal") === "checkout";
@@ -84,7 +84,7 @@ export default function CheckoutModal({
           <div>
             <p className="text-sm text-zinc-500">Order summary:</p>
             <p>
-              {count} tickets, total price: {price} Kč
+              {count} tickets, total price: {formatPrice(price, currency)}
             </p>
           </div>
           <Button onClick={handleSubmit} className="w-full">

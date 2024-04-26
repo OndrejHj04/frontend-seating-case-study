@@ -20,3 +20,7 @@ export function concatName(firstName: string, lastName: string) {
     .toUpperCase()}${lastName.slice(1)}
     `;
 }
+
+export function formatPrice(price: number, currency: string) {
+  return `${price} ${currency}`;
+}

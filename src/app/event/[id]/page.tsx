@@ -29,7 +29,7 @@ export default async function Page({
         <div className="max-w-screen-lg m-auto p-4 flex items-start grow gap-3 w-full">
           {/* seating card */}
 
-          <SeatingMap id={event.eventId} />
+          <SeatingMap event={event} />
 
           {/* event info */}
           <EventWidget event={event} />

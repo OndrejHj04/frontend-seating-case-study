@@ -5,13 +5,16 @@ import { useEffect } from "react";
 
 export function SaveTickets({
   savedTickets,
+  currency,
 }: {
   savedTickets: ticketDetail[];
+  currency: string;
 }) {
-  const { fillTickets } = store();
+  const { fillTickets, setCurrency } = store();
 
   useEffect(() => {
     fillTickets(savedTickets);
+    setCurrency(currency);
   }, []);
 
   return null;

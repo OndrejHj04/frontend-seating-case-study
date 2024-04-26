@@ -8,7 +8,7 @@ import {
 import { cancelTicket, saveTicket } from "@/lib/actions";
 import { store } from "@/lib/store";
 import { ticketDetail } from "@/lib/types";
-import { cn } from "@/lib/utils.ts";
+import { cn, formatPrice } from "@/lib/utils.ts";
 import { TicketCheck } from "lucide-react";
 import React from "react";
 
@@ -18,7 +18,8 @@ interface SeatProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
   (props, ref) => {
-    const { tickets, addTicket, removeTicket } = store();
+    const { tickets, addTicket, removeTicket, currency } = store();
+
     const isInCart = tickets.find(
       (ticket) => ticket.seatId === props.data.seatId
     );
@@ -58,7 +59,7 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
           <p>
             Price:{" "}
             <span className="text-zinc-900 font-semibold">
-              {props.data.price} Kč
+              {formatPrice(props.data.price, currency)}
             </span>
           </p>
           <p>

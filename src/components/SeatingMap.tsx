@@ -2,9 +2,10 @@ import { Seat } from "@/components/Seat";
 import { getSeatingData } from "@/lib/actions";
 import React from "react";
 import { SaveTickets } from "./SaveTickets";
+import { event } from "@/lib/types";
 
-export default async function SeatingMap({ id }: { id: string }) {
-  const { seatingData, savedTickets } = await getSeatingData(id);
+export default async function SeatingMap({ event }: { event: event }) {
+  const { seatingData, savedTickets } = await getSeatingData(event.eventId);
 
   return (
     <div className="grow bg-white rounded-md self-stretch shadow-sm p-3">
@@ -36,7 +37,7 @@ export default async function SeatingMap({ id }: { id: string }) {
             })}
           </React.Fragment>
         ))}
-        <SaveTickets savedTickets={savedTickets} />
+        <SaveTickets savedTickets={savedTickets} currency={event.currencyIso} />
       </div>
       <div className="w-full text-center p-3 bg-zinc-100 rounded-full mt-10">
         <span className="text-sm text-zinc-600">stage</span>

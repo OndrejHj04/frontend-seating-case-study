@@ -9,6 +9,8 @@ interface storeState {
   user: userType | null;
   setUserSession: (user: userType | null) => void;
   logoutUser: () => void;
+  currency: string;
+  setCurrency: (currency: string) => void;
 }
 
 export const store = create<storeState>((set) => ({
@@ -23,4 +25,6 @@ export const store = create<storeState>((set) => ({
   user: null,
   setUserSession: (user) => set(() => ({ user: user })),
   logoutUser: () => set(() => ({ user: null })),
+  currency: "",
+  setCurrency: (currency) => set(() => ({ currency })),
 }));
