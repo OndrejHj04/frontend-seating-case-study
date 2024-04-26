@@ -1,6 +1,7 @@
 import EventWidget from "@/components/EventWidget";
 import SeatingMap from "@/components/SeatingMap";
 import { event } from "@/lib/types";
+import { redirect } from "next/navigation";
 
 const getEvent = async () => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`);
@@ -8,8 +9,17 @@ const getEvent = async () => {
   return data;
 };
 
-export default async function Page() {
+export default async function Page({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
   const event = await getEvent();
+
+  if (event.eventId !== id) {
+    redirect(`/event/${event.eventId}`);
+  }
+
   return (
     <div className="flex flex-col grow">
       {/* header (wrapper) */}
