@@ -3,19 +3,14 @@ import CartDisplay from "./components/CartDisplay";
 import Checkout from "./components/Checkout";
 import CheckoutModal from "./components/CheckoutModal";
 
-export default async function Cart({
-  searchParams: { modal },
-}: {
-  searchParams: { modal: string };
-}) {
-  const displayModal = modal === "checkout";
+export default async function Cart() {
   const user = await getUserSession();
 
   return (
     <>
       <CartDisplay />
       <Checkout />
-      <CheckoutModal displayModal={displayModal} user={user} />
+      <CheckoutModal user={user} />
     </>
   );
 }

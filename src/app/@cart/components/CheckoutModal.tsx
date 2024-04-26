@@ -6,7 +6,7 @@ import UserDisplay from "@/components/UserDisplay";
 import { store } from "@/lib/store";
 import { orderType, userType } from "@/lib/types";
 import { calculateTickets } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "react-modal";
 import swal from "sweetalert";
 
@@ -21,16 +21,12 @@ const customStyles = {
   },
 };
 
-export default function CheckoutModal({
-  displayModal,
-  user,
-}: {
-  displayModal: boolean;
-  user: userType | null;
-}) {
+export default function CheckoutModal({ user }: { user: userType | null }) {
   const { replace } = useRouter();
   const { tickets } = store();
   const { count, price } = calculateTickets(tickets);
+  const searchParams = useSearchParams();
+  const displayModal = searchParams.get("modal") === "checkout";
 
   const handleSubmit = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
