@@ -14,6 +14,8 @@ export interface ticketDetail {
   name: string;
   price: number;
   seatId: string;
+  place?: number;
+  row?: number;
 }
 
 export interface eventTickets {

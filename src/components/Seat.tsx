@@ -61,7 +61,16 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
               {props.data.price} Kč
             </span>
           </p>
-
+          <p>
+            Row:{" "}
+            <span className="text-zinc-900 font-semibold">
+              {props.data.row}
+            </span>{" "}
+            Place:{" "}
+            <span className="text-zinc-900 font-semibold">
+              {props.data.place}
+            </span>
+          </p>
           <footer className="flex flex-col">
             {isInCart ? (
               <Button

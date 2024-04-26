@@ -22,7 +22,8 @@ export default async function SeatingMap({ id }: { id: string }) {
                 ...seatingData.ticketTypes.find(
                   (item) => item.id === seat.ticketTypeId
                 )!,
-                seatId: seat.seatId,
+                ...seat,
+                row: row.seatRow,
               };
               return (
                 <div
