@@ -1,18 +1,10 @@
 import { Seat } from "@/components/Seat";
-import { eventTickets } from "@/lib/types";
+import { getSeatingData } from "@/lib/actions";
 import React from "react";
-
-const getSeatingData = async (id: string) => {
-  const req = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/event-tickets?eventId=${id}`,
-    { cache: "force-cache" }
-  );
-  const data: eventTickets = await req.json();
-  return data;
-};
+import { SaveTickets } from "./SaveTickets";
 
 export default async function SeatingMap({ id }: { id: string }) {
-  const seatingData = await getSeatingData(id);
+  const { seatingData, savedTickets } = await getSeatingData(id);
 
   return (
     <div
@@ -42,6 +34,7 @@ export default async function SeatingMap({ id }: { id: string }) {
           })}
         </React.Fragment>
       ))}
+      <SaveTickets savedTickets={savedTickets} />
     </div>
   );
 }

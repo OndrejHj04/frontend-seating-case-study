@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
+import { cancelTicket, saveTicket } from "@/lib/actions";
 import { store } from "@/lib/store";
 import { ticketDetail } from "@/lib/types";
 import { cn } from "@/lib/utils.ts";
@@ -21,6 +22,16 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
     const isInCart = tickets.find(
       (ticket) => ticket.seatId === props.data.seatId
     );
+
+    const handleAddTicket = () => {
+      addTicket(props.data);
+      saveTicket(props.data);
+    };
+
+    const handleRemoveTicket = () => {
+      removeTicket(props.data);
+      cancelTicket(props.data);
+    };
 
     return (
       <Popover>
@@ -56,16 +67,12 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() => removeTicket(props.data)}
+                onClick={handleRemoveTicket}
               >
                 Remove from cart
               </Button>
             ) : (
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => addTicket(props.data)}
-              >
+              <Button variant="default" size="sm" onClick={handleAddTicket}>
                 Add to cart
               </Button>
             )}
