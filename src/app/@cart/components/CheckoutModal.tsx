@@ -4,10 +4,11 @@ import LoginForm from "@/components/LoginForm";
 import { Button } from "@/components/ui/button";
 import UserDisplay from "@/components/UserDisplay";
 import { store } from "@/lib/store";
-import { userType } from "@/lib/types";
+import { orderType, userType } from "@/lib/types";
 import { calculateTickets } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Modal from "react-modal";
+import swal from "sweetalert";
 
 const customStyles = {
   content: {
@@ -31,6 +32,34 @@ export default function CheckoutModal({
   const { tickets } = store();
   const { count, price } = calculateTickets(tickets);
 
+  const handleSubmit = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        eventId: "3348b37f-6ee2-4513-ac40-b55eb676319b", // temporary solution
+        tickets: tickets.map(({ id, seatId }) => ({
+          ticketTypeId: id,
+          seatId,
+        })),
+        user,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res: orderType) => {
+        if (res.orderId) {
+          swal("Successful!", "Order has been submited!", "success");
+          // reset cart to default
+        } else {
+          swal("Oops!", "Something went wrong!", "error");
+        }
+      })
+      .finally(() => replace("/"));
+  };
+
   return (
     <Modal
       isOpen={displayModal}
@@ -39,7 +68,7 @@ export default function CheckoutModal({
       contentLabel="Example Modal"
     >
       <h2 className="text-xl text-zinc-900 font-semibold text-center">
-        Checkout
+        Your order
       </h2>
       {user ? (
         <div className="flex flex-col gap-3">
@@ -53,7 +82,9 @@ export default function CheckoutModal({
               {count} tickets, total price: {price} Kč
             </p>
           </div>
-          <Button className="w-full">Buy</Button>
+          <Button onClick={handleSubmit} className="w-full">
+            Purchase
+          </Button>
         </div>
       ) : (
         <div>

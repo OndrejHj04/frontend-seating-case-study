@@ -42,3 +42,15 @@ export interface userLoginResponse {
   message: "string";
   user?: userType;
 }
+
+export interface orderType {
+  message: string;
+  orderId?: string;
+  tickets?: [];
+  user?: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
+  totalAmount?: number;
+}
