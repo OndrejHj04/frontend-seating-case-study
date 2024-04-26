@@ -8,34 +8,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
 import { userType } from "@/lib/types";
 import { logoutUser } from "@/lib/actions";
+import UserDisplay from "./UserDisplay";
+import { concatName } from "@/lib/utils";
 
 export default function UserMenu({ user }: { user: userType }) {
-  const name = user.firstName + " " + user.lastName;
+  const name = concatName(user.firstName, user.lastName);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost">
-          <div className="flex items-center gap-2">
-            <Avatar>
-              <AvatarImage
-                src={`https://source.boringavatars.com/marble/120/<user-email>?colors=25106C,7F46DB`}
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-
-            <div className="flex flex-col text-left">
-              <span className="text-sm font-medium">{name}</span>
-              <span className="text-xs text-zinc-500">{user.email}</span>
-            </div>
-          </div>
+          <UserDisplay user={user} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px]">

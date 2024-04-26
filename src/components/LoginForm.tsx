@@ -1,15 +1,9 @@
-"use client";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu.tsx";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { userLoginResponse } from "@/lib/types";
 import { createUserSession } from "@/lib/actions";
+import { userLoginResponse } from "@/lib/types";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 interface formValues {
   email: string;
@@ -42,34 +36,26 @@ export default function LoginForm() {
         }
       });
   };
-
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="secondary">Login or register</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[250px]">
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            placeholder="email"
-            {...register("email", { required: true })}
-            type="email"
-          />
-          <Input
-            placeholder="password"
-            {...register("password", { required: true })}
-            type="password"
-          />
-          {error && (
-            <p className="text-sm text-center text-red-500">
-              Nepodařilo se přihlásit
-            </p>
-          )}
-          <Button type="submit" disabled={!isValid}>
-            Log in
-          </Button>
-        </form>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        placeholder="email"
+        {...register("email", { required: true })}
+        type="email"
+      />
+      <Input
+        placeholder="password"
+        {...register("password", { required: true })}
+        type="password"
+      />
+      {error && (
+        <p className="text-sm text-center text-red-500">
+          Nepodařilo se přihlásit
+        </p>
+      )}
+      <Button type="submit" disabled={!isValid}>
+        Log in
+      </Button>
+    </form>
   );
 }
