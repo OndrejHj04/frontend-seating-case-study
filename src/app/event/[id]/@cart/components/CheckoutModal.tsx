@@ -6,7 +6,7 @@ import UserDisplay from "@/components/UserDisplay";
 import { store } from "@/lib/store";
 import { orderType, userType } from "@/lib/types";
 import { calculateTickets } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Modal from "react-modal";
 import swal from "sweetalert";
 
@@ -21,12 +21,19 @@ const customStyles = {
   },
 };
 
-export default function CheckoutModal({ user }: { user: userType | null }) {
+export default function CheckoutModal({
+  user,
+  eventId,
+}: {
+  user: userType | null;
+  eventId: string;
+}) {
   const { replace } = useRouter();
   const { tickets } = store();
   const { count, price } = calculateTickets(tickets);
   const searchParams = useSearchParams();
   const displayModal = searchParams.get("modal") === "checkout";
+  const pathname = usePathname();
 
   const handleSubmit = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
@@ -36,7 +43,7 @@ export default function CheckoutModal({ user }: { user: userType | null }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        eventId: "3348b37f-6ee2-4513-ac40-b55eb676319b", // temporary solution
+        eventId,
         tickets: tickets.map(({ id, seatId }) => ({
           ticketTypeId: id,
           seatId,
@@ -53,7 +60,9 @@ export default function CheckoutModal({ user }: { user: userType | null }) {
           swal("Oops!", "Something went wrong!", "error");
         }
       })
-      .finally(() => replace("/"));
+      .finally(() => {
+        replace(pathname);
+      });
   };
 
   return (
