@@ -6,7 +6,7 @@ interface storeState {
   addTicket: (ticket: ticketDetail) => void;
   removeTicket: (ticket: ticketDetail) => void;
   user: userType | null;
-  setUserSession: (user: userType) => void;
+  setUserSession: (user: userType | null) => void;
   logoutUser: () => void;
 }
 

@@ -16,8 +16,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { store } from "@/lib/store";
 import { userType } from "@/lib/types";
+import { useCookies } from "react-cookie";
 
 export default function UserMenu({ user }: { user: userType }) {
+  const [, , removeCookie] = useCookies();
   const { logoutUser } = store();
   const name = user.firstName + " " + user.lastName;
   return (
@@ -45,7 +47,10 @@ export default function UserMenu({ user }: { user: userType }) {
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => logoutUser()}
+            onClick={() => {
+              logoutUser();
+              removeCookie("user_token");
+            }}
           >
             Logout
           </DropdownMenuItem>

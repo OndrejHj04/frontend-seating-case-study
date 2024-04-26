@@ -9,7 +9,8 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { userLoginResponse } from "@/lib/types";
-import { store } from "@/lib/store";
+import { generateToken } from "@/lib/actions";
+import { useCookies } from "react-cookie";
 
 interface formValues {
   email: string;
@@ -18,12 +19,13 @@ interface formValues {
 
 export default function LoginForm() {
   const [error, setError] = useState(false);
+  const [, setCookie] = useCookies();
   const {
     register,
     handleSubmit,
     formState: { isValid },
   } = useForm<formValues>();
-  const { setUserSession } = store();
+
   const onSubmit = (data: formValues) => {
     fetch(`https://nfctron-frontend-seating-case-study-2024.vercel.app/login`, {
       method: "POST",
@@ -36,7 +38,9 @@ export default function LoginForm() {
       .then((res) => res.json())
       .then((res: userLoginResponse) => {
         if (res.user) {
-          setUserSession(res.user);
+          generateToken(res.user).then((res) => {
+            setCookie("user_token", res);
+          });
         } else {
           setError(true);
         }
