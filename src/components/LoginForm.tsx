@@ -9,8 +9,7 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { userLoginResponse } from "@/lib/types";
-import { generateToken } from "@/lib/actions";
-import { useCookies } from "react-cookie";
+import { createUserSession } from "@/lib/actions";
 
 interface formValues {
   email: string;
@@ -19,7 +18,6 @@ interface formValues {
 
 export default function LoginForm() {
   const [error, setError] = useState(false);
-  const [, setCookie] = useCookies();
   const {
     register,
     handleSubmit,
@@ -38,9 +36,7 @@ export default function LoginForm() {
       .then((res) => res.json())
       .then((res: userLoginResponse) => {
         if (res.user) {
-          generateToken(res.user).then((res) => {
-            setCookie("user_token", res);
-          });
+          createUserSession(res.user);
         } else {
           setError(true);
         }

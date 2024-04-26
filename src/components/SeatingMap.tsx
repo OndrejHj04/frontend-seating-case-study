@@ -4,7 +4,8 @@ import React from "react";
 
 const getSeatingData = async (id: string) => {
   const req = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/event-tickets?eventId=${id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/event-tickets?eventId=${id}`,
+    { cache: "force-cache" }
   );
   const data: eventTickets = await req.json();
   return data;

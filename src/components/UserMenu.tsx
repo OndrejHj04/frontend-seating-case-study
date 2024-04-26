@@ -14,13 +14,10 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
-import { store } from "@/lib/store";
 import { userType } from "@/lib/types";
-import { useCookies } from "react-cookie";
+import { logoutUser } from "@/lib/actions";
 
 export default function UserMenu({ user }: { user: userType }) {
-  const [, , removeCookie] = useCookies();
-  const { logoutUser } = store();
   const name = user.firstName + " " + user.lastName;
   return (
     <DropdownMenu>
@@ -47,10 +44,7 @@ export default function UserMenu({ user }: { user: userType }) {
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => {
-              logoutUser();
-              removeCookie("user_token");
-            }}
+            onClick={() => logoutUser()}
           >
             Logout
           </DropdownMenuItem>
