@@ -26,12 +26,9 @@ export default async function Page({
 
       <main className="grow flex flex-col justify-center">
         {/* inner content */}
-        <div className="max-w-screen-lg m-auto p-4 flex items-start grow gap-3 w-full">
-          {/* seating card */}
-
+        <div className="max-w-screen-lg m-auto md:p-4 p-2 flex items-start grow gap-3 w-full md:flex-row flex-col">
           <SeatingMap event={event} />
 
-          {/* event info */}
           <EventWidget event={event} />
         </div>
       </main>

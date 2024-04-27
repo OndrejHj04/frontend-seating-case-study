@@ -8,7 +8,7 @@ export default async function SeatingMap({ event }: { event: event }) {
   const { seatingData, savedTickets } = await getSeatingData(event.eventId);
 
   return (
-    <div className="grow bg-white rounded-md self-stretch shadow-sm p-3">
+    <div className="grow bg-white rounded-md self-stretch shadow-sm md:p-3 p-1 md:order-1 order-2">
       <div
         className="grid"
         style={{

@@ -39,7 +39,7 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
         <PopoverTrigger>
           <div
             className={cn(
-              `size-8 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-color flex flex-1`,
+              `md:size-8 size-6 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-color flex flex-1`,
               props.className
             )}
             ref={ref}

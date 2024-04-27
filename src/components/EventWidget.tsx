@@ -44,7 +44,7 @@ export default function EventWidget({ event }: { event: event }) {
   });
 
   return (
-    <aside className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
+    <aside className="w-full md:max-w-sm md:order-2 order-1 bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
       <img src={event.headerImageUrl} alt="NFCtron Keynote banner" />
       <div>
         <h1 className="text-xl text-zinc-900 font-semibold">{event.namePub}</h1>
