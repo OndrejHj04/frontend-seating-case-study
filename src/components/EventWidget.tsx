@@ -1,8 +1,48 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { event } from "@/lib/types";
 import dayjs from "dayjs";
+import { useGoogleLogin } from "@react-oauth/google";
+import swal from "sweetalert";
 
-export default async function EventWidget({ event }: { event: event }) {
+export default function EventWidget({ event }: { event: event }) {
+  const handleError = () => swal("Oops!", "Something went wrong!", "error");
+  const handleSuccess = () =>
+    swal("Successful!", "An event has been added to your calendar!", "success");
+
+  const login = useGoogleLogin({
+    onSuccess: (token) => {
+      const payload = {
+        summary: event.namePub,
+        start: {
+          dateTime: dayjs(event.dateFrom).format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+        end: {
+          dateTime: dayjs(event.dateTo).format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+        location: event.place,
+      };
+      fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token.access_token,
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.error) {
+            handleError();
+          } else {
+            handleSuccess();
+          }
+        })
+        .catch(() => handleError());
+    },
+    onError: () => handleError(),
+    scope: "https://www.googleapis.com/auth/calendar",
+  });
+
   return (
     <aside className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
       <img src={event.headerImageUrl} alt="NFCtron Keynote banner" />
@@ -19,7 +59,7 @@ export default async function EventWidget({ event }: { event: event }) {
 
       <p className="text-sm text-zinc-500">{event.description}</p>
 
-      <Button variant="secondary" disabled>
+      <Button variant="secondary" onClick={() => login()}>
         Add to calendar
       </Button>
     </aside>
