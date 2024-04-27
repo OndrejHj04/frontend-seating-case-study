@@ -22,18 +22,12 @@ export default async function Page({
 
   return (
     <div className="flex flex-col grow">
-      {/* header (wrapper) */}
-
       <main className="grow flex flex-col justify-center">
-        {/* inner content */}
         <div className="max-w-screen-lg m-auto md:p-4 p-2 flex items-start grow gap-3 w-full md:flex-row flex-col">
           <SeatingMap event={event} />
-
           <EventWidget event={event} />
         </div>
       </main>
-
-      {/* bottom cart affix (wrapper) */}
     </div>
   );
 }

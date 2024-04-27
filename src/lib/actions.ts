@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
 
 export async function createUserSession(user: userType) {
+  // create user session in cookies
   cookies().set(
     "user_token",
     jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET as string, {
@@ -14,6 +15,7 @@ export async function createUserSession(user: userType) {
 }
 
 export async function getUserSession() {
+  // read user session from cookies
   const token = cookies().get("user_token")?.value;
   if (token) {
     const { email, firstName, lastName, exp } = jwt.decode(
@@ -28,10 +30,12 @@ export async function getUserSession() {
 }
 
 export async function logoutUser() {
+  // remove user session
   cookies().delete("user_token");
 }
 
 export async function saveTicket(ticket: ticketDetail) {
+  // save ticket to shopping cart session
   const currentSeats = cookies().get("seats");
 
   if (currentSeats) {
@@ -42,6 +46,7 @@ export async function saveTicket(ticket: ticketDetail) {
 }
 
 export async function cancelTicket(ticket: ticketDetail) {
+  // cancel ticket from shopping cart session
   const currentSeats = cookies().get("seats");
 
   if (currentSeats) {
@@ -56,6 +61,7 @@ export async function cancelTicket(ticket: ticketDetail) {
 }
 
 export const getSeatingData = async (id: string) => {
+  // get seating data from api and retrieve last session from cookies
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/event-tickets?eventId=${id}`,
     { cache: "force-cache" }
