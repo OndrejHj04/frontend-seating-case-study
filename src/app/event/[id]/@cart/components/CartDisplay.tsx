@@ -6,6 +6,10 @@ export default function CartDisplay() {
   const { tickets, currency } = store();
   const { count, price } = calculateTickets(tickets);
 
+  if (!currency) {
+    return <div className="bg-zinc-100 rounded-md h-14 w-20" />;
+  }
+
   return (
     <div className="flex flex-col">
       <span>Total for {count} tickets</span>

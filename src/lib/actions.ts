@@ -63,9 +63,10 @@ export const getSeatingData = async (id: string) => {
   const data: eventTickets = await req.json();
   const ticketSession = cookies().get("seats");
   const savedTickets: ticketDetail[] = [];
-
   if (ticketSession) {
-    const ticketList = ticketSession.value.split(",");
+    const ticketList = ticketSession.value
+      .split(",")
+      .filter((item) => item.length);
     for (let i = 0; i < ticketList.length; i++) {
       const foundTicket = data.seatRows
         .map(({ seats }) => seats)
