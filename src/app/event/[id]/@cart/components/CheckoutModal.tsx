@@ -87,7 +87,7 @@ export default function CheckoutModal({
               {count} tickets, total price: {formatPrice(price, currency)}
             </p>
           </div>
-          <Button onClick={handleSubmit} className="w-full">
+          <Button onClick={handleSubmit} className="w-full" data-testid="purchase">
             Purchase
           </Button>
         </div>

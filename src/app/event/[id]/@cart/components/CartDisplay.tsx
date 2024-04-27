@@ -12,7 +12,7 @@ export default function CartDisplay() {
 
   return (
     <div className="flex flex-col">
-      <span>Total for {count} tickets</span>
+      <span data-testid="cart-state">Total for {count} tickets</span>
       <span className="text-2xl font-semibold">
         {formatPrice(price, currency)}
       </span>

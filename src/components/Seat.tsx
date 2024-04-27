@@ -42,6 +42,7 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
               `md:size-8 size-6 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-color flex flex-1`,
               props.className
             )}
+            data-testid="single-seat"
             ref={ref}
           >
             <span className="text-xs text-zinc-400 font-medium m-auto">
@@ -82,7 +83,7 @@ export const Seat = React.forwardRef<HTMLDivElement, SeatProps>(
                 Remove from cart
               </Button>
             ) : (
-              <Button variant="default" size="sm" onClick={handleAddTicket}>
+              <Button variant="default" size="sm" onClick={handleAddTicket} data-testid="cart-button">
                 Add to cart
               </Button>
             )}

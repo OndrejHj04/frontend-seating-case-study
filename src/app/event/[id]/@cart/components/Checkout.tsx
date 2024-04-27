@@ -11,7 +11,7 @@ export default function Checkout() {
       href={"?modal=checkout"}
       className={tickets.length ? "pointer-events-auto" : "pointer-events-none"}
     >
-      <Button variant="default" disabled={!tickets.length}>
+      <Button variant="default" disabled={!tickets.length} data-testid="checkout">
         Checkout now
       </Button>
     </Link>
