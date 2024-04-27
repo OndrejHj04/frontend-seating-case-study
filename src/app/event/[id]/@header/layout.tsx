@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="max-w-[250px] w-full flex">
           <Ticket size={36} />
         </div>
-        <h1 className="font-semibold text-xl text-zinc-900">Ondřej Hájek</h1>
+        <h2 data-testid="name-title" className="font-semibold text-xl text-zinc-900">Ondřej Hájek</h2>
         <div className="max-w-[250px] w-full flex justify-end">{children}</div>
       </div>
     </nav>
