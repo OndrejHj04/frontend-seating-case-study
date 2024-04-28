@@ -69,7 +69,7 @@ export default function CheckoutModal({
     <Modal
       isOpen={displayModal}
       style={customStyles}
-      onRequestClose={() => replace("/")}
+      onRequestClose={() => replace(pathname)}
       contentLabel="Example Modal"
     >
       <h2 className="text-xl text-zinc-900 font-semibold text-center">
@@ -87,7 +87,11 @@ export default function CheckoutModal({
               {count} tickets, total price: {formatPrice(price, currency)}
             </p>
           </div>
-          <Button onClick={handleSubmit} className="w-full" data-testid="purchase">
+          <Button
+            onClick={handleSubmit}
+            className="w-full"
+            data-testid="purchase"
+          >
             Purchase
           </Button>
         </div>
