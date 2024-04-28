@@ -1,76 +1,45 @@
 # 🧑🏻‍🚀 NFCtron Frontend Case Study (Seating, 2024)
 
->👋 Vítejte u zadání pro kandidáty na pozici ⚛️ **React Frontend Developer** v NFCtron! Vaším úkolem bude
-dokončit jednoduchou React aplikaci pro nákup vstupenek na akci.
+> Aplikace kterou jsem vytvořil jako součást výběrového řízení do NFCtron. Předpřipravený template obsahoval UI a API endpointy a úkolem bylo dodělat funkční řešení. Volbou frameworku jsem nebyl limitován.
 
-## 🎯 Úvod
+## 🌱 Funkční požadavky
 
-Předpřipravili jsme pro vás základ aplikace s přednastavenými nástroji a hlavním layoutem (neznamená to ale však že jej nemůžete upravit dle vlastního uvážení).
-Zaroveň pro aplikaci existují připravené [API endpointy](./API.md), které budou potřebné pro získání dat k zobrazení.
+- přihlášení do aplikace
+- zobrazení informací o příslušném eventu
+- zobrazení volných míst a jejich přidání do košíku
+- zpracování objednávky
 
-**👉🏻 Vaší úlohou bude aplikaci funkčně dokončit.**
+## ⚡ Featury aplikace
 
-### High-Level popis aplikace
-Aplikace by měla být jednoduchá SPA, která umožní zobrazit detail akce s mapou dostupných sedadel .
-Uživatel si po příchodu může prohlížet sedadla a libovolně je do svého nákupního košíku přidávat či naopak z něj odebírat.
-V tomto kroce má uživatel přehled o počtu vstupenek v košíku a jejich celkové hodnotě.
-Před dokončením objednávky je uživatel vyzván k vyplnění potřebných údajů, v případě že nevyužil možnost přihlášení se do svého účtu.
-Odesláním objednávky je pak uživatel informován o jejím vytvoření či případné chybě a tímto krokem je scope aplikace uzavřen.
+- průběžné ukládání košíku
+- přidání eventu do google kalendáře (pouze pro schválené účty)
+- zachování user session
 
-![Base Layout](./base-layout.png)
+## ⚙️ Použité technologie
 
-## 🌱 Požadavky na Funkčnost
+Framework: Next.js\
+UI: Tailwind, Radix-UI, Sweetalert, Lucide-React\
+State management: Zustand\
+Zpracování user session: JWT token\
+E2E testování: Cypress\
+Další knihovny: React Hook Form, Dayjs
 
-Aplikace by měla být schopna:
+## 🔭 Možná budoucí vylepšení
 
-- [ ] Zobrazit onepage detail akce s relevantními údaji z API (obrázek, název, popis, datum, ...)
-- [ ] Zobrazit mapu dostupných sedadel (řada, sedadlo) z API.
-  - zde není třeba mapu vykreslovat optimalizovaně, např. pomocí Canvas API/SVG, postačí jako HTML prvky
-  - pozor na pořadí sedadel (ne vždy přijdou všechna sedadla po sobě 👀)
-- [ ] Po kliku na sedadlo umožnit jeho přidání do košíku (případně odebrání, pokud je již v košíku).
-- [ ] Spravovat obsah košíku s využitím promyšleného state managementu.
-- [ ] Zobrazit aktuální počet vstupenek v košíku a jejich celkovou hodnotu (ve správné měně a formátu).
-- [ ] Po kliknutí na "Koupit vstupenky" umožnit přihlášení nebo vyplnění potřebných údajů jako "host".
-- [ ] Vytvořit objednávku skrze API a zobrazit výsledek (úspěch nebo chybu).
+- [ ]  Dark mode
+- [ ]  Rozlišení mezi druhy sedadla
+- [x]  Copy-to-clipboard adresa eventu
+- [x]  Input password toggle zobrazení hesla
+- [ ]  Modal reusable component
 
-## 🌟 Bonusové Funkce
-- [ ] Umožnit přidání akce do kalendáře.
-- [ ] Multijazyčnost aplikace.
+## 🧑‍💻 Dev log
 
-_A dalším vychytávkám se meze nekladou! Ukážte, co umíte! 💫_
+Na začátku jsem dostal zpracované uživatelské rozhraní a API endpointy. Vše fungovalo tak jak mělo a nebyl problém se okamžitě pustit do dokončování aplikace. "Plain" React jsem obohatil o Next.js, jelikož jsem zde viděl příležitosti kde framework využít (SSR, práce s cookies). Radix-ui, jež bylo použito na v templatu, jsem nikdy nepoužíval a tak bylo ze začátku těžší si na jinou knihovnu komponent zvyknout. Bylo jasné, že state management aplikace nebude rozsáhlý a proto jsem zvolil Zustand.
 
+I když tato aplikace obsahuje méně formulářů (konkrétně jeden a ten samý na dvou místech), než ty na kterých obvykle dělám, přesto jsem na jejich řešení zvolil React Hook Form. Už předpřipravenou sad UI komponent jsem rozšířil o input, který zde na formulářích používám. Nebyl by tedy problém v budoucnu aplikaci obohatit o více formulářů.
 
-## ☝🏻 Dobré vědět
-- Aplikace musí být psána v jazyce **TypeScript**.
-- Využití jiných knihoven není zakázáno, naopak **je doporučeno**.
-- Ve výchozím kódu aplikace lze dělat naprosto libovolné změny.
-- Dbejte na kvalitu kódu, jeho čitelnost a strukturu.
+Jak user session, tak průběžné ukládání košíku je zařízeno pomocí cookies funkce v Next.js. User session používá JWT token s platností 1 hodina a ukládání košíku uchovává seatId jednotlivých sedadel. Z důvodu, že endpoint `event/tickets` vrací vždy jiné rozležení sálu, bylo nutné fetchovat data a porovnávat s cookies session v jedné funkci. Jinak by totiž uložené seatId nenašlo odpovídající sedadlo. Následně se lístky získané z cookies uloží do state managementu stejným principem, jako by je tam přidal uživatel kliknutím.
 
+Přidání eventu by v ideálním případě mělo vytvořit event v google kalendáři *jakémukoliv* uživateli, který tlačítko zmáčkne. Jelikož je zde přihlašování zpracováno jen tak na-oko a za uživatelem nestojí reálný email, tak není možné použít jeho session pro zpracování požadavků do google kalendáře. Jedinou možností (která mě napadla 🧠), byla autentizace uživatele pomocí google účtu po kliknutí na tlačítku "Add to calendar". Bohužel však není možné (spíš mě se nepovedlo) bez oficiálního vydání aplikace získávat souhlas od všech uživatelů k manipulaci s jejich kalendářem a tudýž zatím tato featura funguje jen napůl (*neschválení* uživatelé dostanou chybu "přístup neschválen").
 
-## 📋 Kritéria Hodnocení
-- Funkčnost a splnění funkčních požadavků.
-- Vzhled aplikace a responzivita na mobilních zařízeních.
-- Práce s daty, state management a volání API.
-- Kvalita, struktura a komentování/dokumentace kódu.
-- Práce s Git.
-
-## 🪜 Jak postupovat?
-1. Udělejte si fork tohoto repozitáře.
-2. Nastavte si své oblíbené vývojové prostředí.
-3. Dokončete úkol dle požadavků a zadání výše.
-4. Průběžně commitujte a pushujte své změny.
-5. Otestujte řádně svou aplikaci.
-6. Jakékoliv komentáře, či doplnění informací/dokumentace k vaší práci uvítáme v souboru `COMMENTS.md`.
-7. Svou aplikaci ideálně nasaďte na nějaký hosting (doporučujeme ▲ Vercel).
-8. Po dokončení úkolu zašlete na email [ditrich@nfctron.com](mailto:ditrich@nfctron.com):
-   - odkaz na Váš repozitář,
-   - a odkaz na nasazenou aplikaci.
-
-    
-📧 Máte-li jakékoli dotazy nebo potřebujete pomoci, neváhejte se na nás obrátit.
-
----
-
-Přejeme vám hodně štěstí a těšíme se na vaše řešení! 🌟
-
-_–– Tým NFCtron_
+Pomocí e2e testování jsem se rozhodl zaměřit na logiku přihlašování, manipulaci s košíkem a celkové zpracování objednávky. Více než samotná aplikace se však otestovaly moje bídné schopnosti psaní testů, jelikož mnou psané testy rozhodně nepodléhají best-practices. Naštěstí se přes moje commandy Cypress prokousal a několikrát mojí aplikaci schválil zelenou fajfkou🟢💯.
