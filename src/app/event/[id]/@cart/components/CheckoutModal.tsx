@@ -89,6 +89,7 @@ export default function CheckoutModal({
           </div>
           <Button
             onClick={handleSubmit}
+            disabled={!tickets.length}
             className="w-full"
             data-testid="purchase"
           >
