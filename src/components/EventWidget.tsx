@@ -4,6 +4,7 @@ import { event } from "@/lib/types";
 import dayjs from "dayjs";
 import { useGoogleLogin } from "@react-oauth/google";
 import swal from "sweetalert";
+import CopyTextButton from "./CopyTextButton";
 
 export default function EventWidget({ event }: { event: event }) {
   const handleError = () => swal("Oops!", "Something went wrong!", "error");
@@ -62,6 +63,7 @@ export default function EventWidget({ event }: { event: event }) {
       <Button variant="secondary" onClick={() => login()}>
         Add to calendar
       </Button>
+      <CopyTextButton textToCopy={event.place} />
     </aside>
   );
 }
