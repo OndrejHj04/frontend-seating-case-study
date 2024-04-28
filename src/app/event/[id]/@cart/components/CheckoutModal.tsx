@@ -3,6 +3,7 @@
 import LoginForm from "@/components/LoginForm";
 import { Button } from "@/components/ui/button";
 import UserDisplay from "@/components/UserDisplay";
+import { removeTicketSession } from "@/lib/actions";
 import { store } from "@/lib/store";
 import { orderType, userType } from "@/lib/types";
 import { calculateTickets, formatPrice } from "@/lib/utils";
@@ -56,6 +57,7 @@ export default function CheckoutModal({
         if (res.orderId) {
           swal("Successful!", "Order has been submited!", "success");
           resetCart();
+          removeTicketSession();
         } else {
           swal("Oops!", "Something went wrong!", "error");
         }

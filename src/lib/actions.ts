@@ -60,7 +60,12 @@ export async function cancelTicket(ticket: ticketDetail) {
   }
 }
 
-export const getSeatingData = async (id: string) => {
+export async function removeTicketSession() {
+  // remove ticket session on successful order
+  cookies().delete("seats");
+}
+
+export async function getSeatingData(id: string) {
   // get seating data from api and retrieve last session from cookies
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/event-tickets?eventId=${id}`,
@@ -85,4 +90,4 @@ export const getSeatingData = async (id: string) => {
     }
   }
   return { seatingData: data, savedTickets };
-};
+}
