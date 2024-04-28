@@ -3,7 +3,7 @@ import "@/index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export const metadata: Metadata = {
-  title: "My App",
+  title: "Ondřej Hájek ticketing app",
   description: "My App is a...",
 };
 
