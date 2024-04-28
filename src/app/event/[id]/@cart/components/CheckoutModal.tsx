@@ -29,7 +29,7 @@ export default function CheckoutModal({
   eventId: string;
 }) {
   const { replace } = useRouter();
-  const { tickets, currency } = store();
+  const { tickets, currency, resetCart } = store();
   const { count, price } = calculateTickets(tickets);
   const searchParams = useSearchParams();
   const displayModal = searchParams.get("modal") === "checkout";
@@ -55,7 +55,7 @@ export default function CheckoutModal({
       .then((res: orderType) => {
         if (res.orderId) {
           swal("Successful!", "Order has been submited!", "success");
-          // reset cart to default
+          resetCart();
         } else {
           swal("Oops!", "Something went wrong!", "error");
         }

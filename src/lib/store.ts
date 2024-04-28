@@ -6,6 +6,7 @@ interface storeState {
   addTicket: (ticket: ticketDetail) => void;
   removeTicket: (ticket: ticketDetail) => void;
   fillTickets: (tickets: ticketDetail[]) => void;
+  resetCart: () => void;
   user: userType | null;
   setUserSession: (user: userType | null) => void;
   logoutUser: () => void;
@@ -21,6 +22,7 @@ export const store = create<storeState>((set) => ({
     set((state) => ({
       tickets: state.tickets.filter(({ seatId }) => ticket.seatId !== seatId),
     })),
+  resetCart: () => set(() => ({ tickets: [] })),
   fillTickets: (tickets) => set(() => ({ tickets })),
   user: null,
   setUserSession: (user) => set(() => ({ user: user })),
